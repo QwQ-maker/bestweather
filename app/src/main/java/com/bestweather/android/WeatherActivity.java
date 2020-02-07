@@ -7,12 +7,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bestweather.android.gson.Forecast;
@@ -39,7 +42,9 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView comfortText;
     private TextView carWashText;
     private TextView sportText;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    public SwipeRefreshLayout swipeRefreshLayout;
+    public DrawerLayout changeLayout;
+    private Button changebutton;
 
 
     @Override
@@ -53,13 +58,20 @@ public class WeatherActivity extends AppCompatActivity {
         degreeText = findViewById (R.id.degree_text);
         weatherInfoText = findViewById(R.id.weather_info_text);
         forecastLayout = findViewById (R.id.forecast_layout);
+        changeLayout=findViewById(R.id.change_layout);
+        changebutton=findViewById(R.id.change_button);
         aqiText = findViewById (R.id.aqi_text);
         pm25Text = findViewById (R.id.pm25_text);
         comfortText = findViewById(R.id.comfort_text);
         carWashText = findViewById(R.id.car_wash_text);
         sportText = findViewById(R.id.sport_text);
         final String weatherId;
-
+        changebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLayout.openDrawer(GravityCompat.START);
+            }
+        });
         SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString=preferences.getString("weather",null);
         if (weatherString!=null){
